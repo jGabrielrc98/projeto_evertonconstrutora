@@ -248,7 +248,7 @@ class CirclePainter extends CustomPainter {
 
     // Desenhar o caminho circular
     final double padding = 30.0;
-    Rect rect = Rect.fromLTWH(0, 0, 100, 50);
+    Rect rect = Rect.fromLTWH(0, 0, 120, 50);
 
     final Path path = Path()
       ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(5)));
