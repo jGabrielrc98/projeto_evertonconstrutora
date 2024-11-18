@@ -50,7 +50,7 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
       right: 0,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Colors.black26,
@@ -58,10 +58,10 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
               blurRadius: 0,
             ),
           ],
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(75),
           ),
-          color: const Color.fromARGB(200, 255, 255, 255),
+          color: Color.fromARGB(200, 255, 255, 255),
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -98,13 +98,9 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
                         label: 'LOCALIZAÇÃO',
                         onPressed: () => _scrollToSection('LOCALIZAÇÃO'),
                       ),
-                      Container(
-                        color: Colors.black12,
-                        child: NavButton(
-                          label: 'ORÇAMENTO GRATUITO',
-                          onPressed: () =>
-                              _scrollToSection('ORÇAMENTO GRATUITO'),
-                        ),
+                      NavButton(
+                        label: 'ORÇAMENTO GRATUITO',
+                        onPressed: () => _scrollToSection('ORÇAMENTO GRATUITO'),
                       ),
                     ],
                   ),
@@ -159,7 +155,7 @@ class _NavButtonState extends State<NavButton>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 4),
     )..repeat(); // Repetir animação continuamente
   }
 
@@ -187,7 +183,7 @@ class _NavButtonState extends State<NavButton>
         });
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 10),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           color: _isHovered
@@ -242,16 +238,15 @@ class CirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = Colors.blue
-      ..strokeWidth = 2.0
+      ..color = const Color.fromARGB(157, 146, 179, 228)
+      ..strokeWidth = 3.5
       ..style = PaintingStyle.stroke;
 
     // Desenhar o caminho circular
-    final double padding = 30.0;
-    Rect rect = Rect.fromLTWH(0, 0, 120, 50);
+    Rect rect = const Rect.fromLTWH(2, 0, 200, 30);
 
     final Path path = Path()
-      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(5)));
+      ..addRRect(RRect.fromRectAndRadius(rect, const Radius.circular(30)));
 
     // Calcular o comprimento do caminho
     final PathMetric pathMetric = path.computeMetrics().first;
