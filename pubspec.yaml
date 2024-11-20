@@ -70,7 +70,7 @@ flutter:
     - lib/assets/images/ImagemFive.jpeg
     - lib/assets/images/ImagemSix.jpeg
     - lib/assets/images/ImagemSeven.jpeg
-    - lib/assets/videos/videoDeInicio.mp4
+    - lib/assets/videos/VideoDeInicio.mp4
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
