@@ -15,7 +15,7 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
   void _scrollToSection(String section) {
     double offset = 0.0;
     switch (section) {
-      case 'A EMPRESA':
+      case 'SOBRE NÓS':
         offset = 700; // Substitua pelo valor real da posição da seção
         break;
       case 'SERVIÇOS':
@@ -83,8 +83,8 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
                   Row(
                     children: [
                       NavButton(
-                        label: 'A EMPRESA',
-                        onPressed: () => _scrollToSection('A EMPRESA'),
+                        label: 'SOBRE NÓS',
+                        onPressed: () => _scrollToSection('SOBRE NÓS'),
                       ),
                       NavButton(
                         label: 'SERVIÇOS',
