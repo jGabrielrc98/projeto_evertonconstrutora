@@ -33,7 +33,7 @@ class AboutSection extends StatelessWidget {
                   );
                 },
                 carouselController:
-                    CarouselSliderController(), // Conexão com o controlador
+                    CarouselSliderControllerImpl(), // Conexão com o controlador
                 options: CarouselOptions(
                   height: 500,
                   autoPlay: true,
@@ -87,22 +87,22 @@ class AboutSection extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
+          const Expanded(
             flex: 1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'SOBRE NÓS',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 123, 186, 242),
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  'A Empresa ES construtora foi fundada em junho de 2015 com o objetivo de atender as necessidades da indústria, comércio, habitação e obras publicas no seguimento de manutenções civil, ampliação e construções.',
+                SizedBox(height: 10),
+                Text(
+                  'A Empresa ES construtora Fundada em junho de 2015 com objetivo de atender as necessidades de manutenção e ampliações da indústria de alimentos, com padrões específicos de segurança, quantidade e prazos de execução estabelecidos pelos clientes. Tendo foco no compromisso de apresentar soluções técnicas para diversos tipos e seguimentos de obras civis, buscando excelência na qualidade, segurança e comprometida com os objetivos a serem atingidos. Temos alcançados nos últimos anos grandes clientes e uma vasta capacidade de execução de atividades variadas em vários estados brasileiros.',
                   style: TextStyle(fontSize: 16),
                 ),
               ],
