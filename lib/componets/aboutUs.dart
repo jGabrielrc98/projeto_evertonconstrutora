@@ -1,70 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
 
   // Função para exibir o carrossel de imagens
   void _showImageCarousel(BuildContext context, List<String> imagePaths) {
-    final CarouselController controller = CarouselController();
+    int currentPage = 0;
+    final PageController pageController = PageController();
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          backgroundColor: const Color.fromARGB(85, 0, 0, 0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CarouselSlider.builder(
-                itemCount: imagePaths.length,
-                itemBuilder: (context, index, realIndex) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: Image.asset(
-                        imagePaths[index],
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
-                carouselController:
-                    CarouselSliderControllerImpl(), // Conexão com o controlador
-                options: CarouselOptions(
-                  height: 500,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  enableInfiniteScroll: true,
-                  enlargeCenterPage: true,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          backgroundColor: const Color.fromARGB(196, 0, 0, 0),
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    onPressed: () =>
-                        controller.previousPage(), // Navegação anterior
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  SizedBox(
+                    height: 550,
+                    child: PageView.builder(
+                      controller: pageController,
+                      itemCount: imagePaths.length,
+                      onPageChanged: (index) {
+                        setState(() {
+                          currentPage = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              imagePaths[index],
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                  IconButton(
-                    onPressed: () => controller.nextPage(), // Navegação próxima
-                    icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          if (currentPage > 0) {
+                            pageController.previousPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease,
+                            );
+                          }
+                        },
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          if (currentPage < imagePaths.length - 1) {
+                            pageController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease,
+                            );
+                          }
+                        },
+                        icon: const Icon(Icons.arrow_forward,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text(
+                      'Fechar',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text(
-                  'Fechar',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         );
       },
@@ -140,7 +158,7 @@ class AboutSection extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => _showImageCarousel(context, imagePaths),
-                  child: const Text('VEJA MAIS iMAGENS!'),
+                  child: const Text('VEJA MAIS IMAGENS!'),
                 ),
               ],
             ),
@@ -148,21 +166,5 @@ class AboutSection extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-extension CarouselNavigationExtension on CarouselController {
-  // Função para navegar para a página anterior
-  void previousPage(
-      {Duration duration = const Duration(milliseconds: 300),
-      Curve curve = Curves.ease}) {
-    this.previousPage(duration: duration, curve: curve);
-  }
-
-  // Função para navegar para a próxima página
-  void nextPage(
-      {Duration duration = const Duration(milliseconds: 300),
-      Curve curve = Curves.ease}) {
-    this.nextPage(duration: duration, curve: curve);
   }
 }

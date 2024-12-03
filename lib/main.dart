@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'componets/novbar.dart';
 import 'componets/section_one.dart';
 import 'componets/aboutUs.dart';
+import 'componets/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,6 +40,7 @@ class HomeScreen extends StatelessWidget {
             ),
             SectionOne(),
             AboutSection(),
+
             // Outras seções aqui...
           ],
         ),
