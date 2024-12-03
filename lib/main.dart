@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
             ),
             SectionOne(),
             AboutSection(),
+            ServicesSection()
 
             // Outras seções aqui...
           ],
