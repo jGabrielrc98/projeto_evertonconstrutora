@@ -71,6 +71,7 @@ flutter:
     - lib/assets/images/ImagemFive.jpeg
     - lib/assets/images/ImagemSix.jpeg
     - lib/assets/images/ImagemSeven.jpeg
+    - lib/assets/images/imagemfundoServico.jpg
     - lib/assets/videos/VideoDeInicio.mp4
 
 

@@ -36,7 +36,7 @@ class ServicesSection extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-              'lib/assets/images/imagemfundoServico.jpg'), // Substitua com o caminho correto da imagem
+              'lib/assets/images/ImagemFive.jpeg'), // Substitua com o caminho correto da imagem
           fit: BoxFit.cover, // A imagem vai cobrir todo o espaço disponível
         ),
       ),
@@ -74,11 +74,7 @@ class ServicesSection extends StatelessWidget {
                         curve: Curves.easeInOut,
                         margin: const EdgeInsets.only(
                             bottom: 8), // Diminuir o espaço entre os itens
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(30)),
-                          color: Color.fromARGB(162, 255, 255, 255),
-                        ),
+                        decoration: BoxDecoration(),
                         padding: const EdgeInsets.symmetric(
                             vertical: 12, horizontal: 20), // Diminuir padding
                         child: Row(
@@ -89,9 +85,8 @@ class ServicesSection extends StatelessWidget {
                               child: Text(
                                 services[index],
                                 style: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18), // Tamanho menor
+                                    color: Colors.white,
+                                    fontSize: 14), // Tamanho menor
                                 textAlign: TextAlign.start,
                               ),
                             ),
@@ -132,7 +127,7 @@ class ServicesSection extends StatelessWidget {
 
           // Carrossel de Imagens
           Expanded(
-            flex: 3,
+            flex: 4,
             child: CarouselSlider(
               options: CarouselOptions(
                 height: 350,

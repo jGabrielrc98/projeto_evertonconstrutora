@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'componets/novbar.dart';
-import 'componets/section_one.dart';
-import 'componets/aboutUs.dart';
+import 'package:projeto_evertonconstrutora/assets/componets/aboutUs.dart';
+import 'package:projeto_evertonconstrutora/assets/componets/novbar.dart';
+import 'package:projeto_evertonconstrutora/assets/componets/section_one.dart';
 import 'componets/services.dart';
 import 'componets/customers.dart';
 
@@ -42,9 +42,7 @@ class HomeScreen extends StatelessWidget {
             SectionOne(),
             AboutSection(),
             ServicesSection(),
-            Container(
-              color: Colors.red,
-            )
+            //Customers(),
           ],
         ),
       ),
