@@ -3,6 +3,7 @@ import 'componets/novbar.dart';
 import 'componets/section_one.dart';
 import 'componets/aboutUs.dart';
 import 'componets/services.dart';
+import 'componets/customers.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,9 +41,10 @@ class HomeScreen extends StatelessWidget {
             ),
             SectionOne(),
             AboutSection(),
-            ServicesSection()
-
-            // Outras seções aqui...
+            ServicesSection(),
+            Container(
+              color: Colors.red,
+            )
           ],
         ),
       ),
