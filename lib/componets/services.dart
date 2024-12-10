@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'customers.dart';
+import 'location.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({super.key});
@@ -35,8 +35,7 @@ class ServicesSection extends StatelessWidget {
       // Aqui substituímos a cor de fundo por uma imagem
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(
-              'lib/assets/images/imagemfundoServico.jpg'), // Substitua com o caminho correto da imagem
+          image: AssetImage('lib/assets/images/imagemfundoServico.jpg'),
           fit: BoxFit.cover, // A imagem vai cobrir todo o espaço disponível
         ),
       ),
@@ -50,14 +49,13 @@ class ServicesSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text(
-                  ' Nossos Serviços',
+                  'Nossos Serviços',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 36,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
                   ),
-                  textAlign: TextAlign.start,
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30),
                 // Lista de serviços com animação de hover
@@ -90,7 +88,7 @@ class ServicesSection extends StatelessWidget {
                                 services[index],
                                 style: const TextStyle(
                                     color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 18), // Tamanho menor
                                 textAlign: TextAlign.start,
                               ),
@@ -109,18 +107,22 @@ class ServicesSection extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Customers(),
+                          builder: (context) => Location(),
                         ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: Color.fromARGB(162, 255, 255, 255),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32, vertical: 16),
                     ),
                     child: const Text(
                       'Detalhes',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

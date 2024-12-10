@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_evertonconstrutora/assets/componets/aboutUs.dart';
-import 'package:projeto_evertonconstrutora/assets/componets/novbar.dart';
-import 'package:projeto_evertonconstrutora/assets/componets/section_one.dart';
+import 'componets/novbar.dart';
+import 'componets/aboutUs.dart';
+import 'componets/section_one.dart';
 import 'componets/services.dart';
 import 'componets/customers.dart';
+import 'componets/location.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,7 +43,8 @@ class HomeScreen extends StatelessWidget {
             SectionOne(),
             AboutSection(),
             ServicesSection(),
-            //Customers(),
+            Customers(),
+            //Location(),
           ],
         ),
       ),

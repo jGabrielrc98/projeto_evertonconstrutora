@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   video_player: ^2.6.3
   carousel_slider: ^5.0.0
+  google_maps_flutter: ^2.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -73,6 +74,20 @@ flutter:
     - lib/assets/images/ImagemSeven.jpeg
     - lib/assets/images/imagemfundoServico.jpg
     - lib/assets/videos/VideoDeInicio.mp4
+
+    - lib/assets/logos/logo0.png
+    - lib/assets/logos/logo1.png
+    - lib/assets/logos/logo2.svg
+    - lib/assets/logos/logo3.jpg
+    - lib/assets/logos/logo4.png
+    - lib/assets/logos/logo5.png
+    - lib/assets/logos/logo6.jpg
+    - lib/assets/logos/logo7.svg
+    - lib/assets/logos/logo8.png
+    - lib/assets/logos/logo9.png
+    - lib/assets/logos/logo10.png
+    - lib/assets/logos/logo11.png
+    - lib/assets/logos/logo12.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
