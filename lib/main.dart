@@ -44,7 +44,11 @@ class HomeScreen extends StatelessWidget {
             AboutSection(),
             ServicesSection(),
             Customers(),
-            //Location(),
+            Container(
+              height: 650,
+              width: double.infinity,
+              child: Location(),
+            )
           ],
         ),
       ),
