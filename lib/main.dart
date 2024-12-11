@@ -5,6 +5,7 @@ import 'componets/section_one.dart';
 import 'componets/services.dart';
 import 'componets/customers.dart';
 import 'componets/location.dart';
+import 'componets/budget.dart';
 
 void main() {
   runApp(MyApp());
@@ -48,7 +49,8 @@ class HomeScreen extends StatelessWidget {
               height: 650,
               width: double.infinity,
               child: Location(),
-            )
+            ),
+            Orcamento(),
           ],
         ),
       ),
