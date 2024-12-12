@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:http/http.dart' as http;
 
 class Orcamento extends StatefulWidget {
   const Orcamento({Key? key}) : super(key: key);
@@ -21,32 +22,84 @@ class _OrcamentoState extends State<Orcamento> {
   // Variáveis para controle do assunto
   String? _assuntoSelecionado;
 
-  // Função para validar e enviar o orçamento
-  void _enviarOrcamento() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      // Criar o conteúdo do e-mail
-      final Email email = Email(
-        body: 'Nome: ${_nomeController.text}\n'
-            'Email: ${_emailController.text}\n'
-            'Telefone: ${_telefoneController.text}\n'
-            'Assunto: $_assuntoSelecionado\n'
-            'Descrição: ${_descricaoController.text}',
-        subject: 'Orçamento de ${_nomeController.text}',
-        recipients: ['carinaferreiras@icloud.com'],
-        isHTML: false, // Definindo que o corpo do e-mail é texto simples
-      );
+  final String _sendGridApiKey = 'aUs0T1H9rIKjeuXS4Ct5Wjq13OJiTjo7';
 
+  // Função para enviar o orçamento via SendGrid
+  Future<void> _enviarOrcamento() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      final nome = _nomeController.text;
+      final email = _emailController.text;
+      final telefone = _telefoneController.text;
+      final assunto = _assuntoSelecionado ?? 'Sem Assunto';
+      final descricao = _descricaoController.text;
+
+      // Criar o corpo do e-mail para enviar via SendGrid
+      final emailData = {
+        "personalizations": [
+          {
+            "to": [
+              {"email": "carinaferreiras@icloud.com"} // Destinatário do e-mail
+            ],
+            "subject": 'Orçamento de $nome'
+          }
+        ],
+        "from": {"email": "seu-email@dominio.com"}, // Substitua pelo seu e-mail
+        "content": [
+          {
+            "type": "text/plain",
+            "value":
+                'Nome: $nome\nEmail: $email\nTelefone: $telefone\nAssunto: $assunto\nDescrição: $descricao'
+          }
+        ]
+      };
+
+      // Enviar a requisição HTTP para a API do SendGrid
       try {
-        // Enviar o e-mail
-        await FlutterEmailSender.send(email);
-        // Exibir mensagem de sucesso
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Orçamento enviado com sucesso!'),
-        ));
+        final response = await http.post(
+          Uri.parse('https://api.sendgrid.com/v3/mail/send'),
+          headers: {
+            'Authorization': 'Bearer $_sendGridApiKey',
+            'Content-Type': 'application/json',
+          },
+          body: json.encode(emailData),
+        );
+
+        if (response.statusCode == 202) {
+          // Exibir mensagem de sucesso
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              'Orçamento enviado com sucesso!',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            backgroundColor: Colors.green,
+          ));
+        } else {
+          // Exibir erro
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              'Falha ao enviar o orçamento: ${response.body}',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            backgroundColor: const Color.fromARGB(255, 54, 244, 190),
+          ));
+        }
       } catch (e) {
-        // Exibir erro caso o envio falhe
+        // Exibir erro em caso de exceção
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Falha ao enviar o orçamento: $e'),
+          content: Text(
+            'Erro ao enviar o orçamento: $e',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.red,
         ));
       }
     }

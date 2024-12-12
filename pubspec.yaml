@@ -35,6 +35,7 @@ dependencies:
   flutter_map: ^4.0.0
   latlong2: ^0.8.0
   flutter_email_sender: ^6.0.3
+  http: ^0.13.6
 
   
 
@@ -68,14 +69,82 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/images/logo.png
-    - lib/assets/images/imagemInicio.jpeg
-    - lib/assets/images/ImagemOne.jpeg
-    - lib/assets/images/ImagemTwo.jpeg
-    - lib/assets/images/ImagemThree.jpeg
-    - lib/assets/images/ImagemFour.jpeg
-    - lib/assets/images/ImagemFive.jpeg
-    - lib/assets/images/ImagemSix.jpeg
-    - lib/assets/images/ImagemSeven.jpeg
+    - lib/assets/images/imagem1.jpeg
+    - lib/assets/images/imagem2.jpeg
+    - lib/assets/images/imagem3.jpeg
+    - lib/assets/images/imagem4.jpeg
+    - lib/assets/images/imagem5.jpeg
+    - lib/assets/images/imagem6.jpeg
+    - lib/assets/images/imagem7.jpeg
+    - lib/assets/images/imagem8.jpeg
+    - lib/assets/images/imagem9.jpeg
+    - lib/assets/images/imagem10.jpeg
+    - lib/assets/images/imagem11.jpeg
+    - lib/assets/images/imagem12.jpeg
+    - lib/assets/images/imagem13.jpeg
+    - lib/assets/images/imagem14.jpeg
+    - lib/assets/images/imagem15.jpeg
+    - lib/assets/images/imagem16.jpeg
+    - lib/assets/images/imagem17.jpeg
+    - lib/assets/images/imagem18.jpeg
+    - lib/assets/images/imagem19.jpeg
+    - lib/assets/images/imagem20.jpeg
+    - lib/assets/images/imagem21.jpeg
+    - lib/assets/images/imagem22.jpeg
+    - lib/assets/images/imagem23.jpeg
+    - lib/assets/images/imagem24.jpeg
+    - lib/assets/images/imagem25.jpeg
+    - lib/assets/images/imagem26.jpeg
+    - lib/assets/images/imagem27.jpeg
+    - lib/assets/images/imagem28.jpeg
+    - lib/assets/images/imagem29.jpeg
+    - lib/assets/images/imagem30.jpeg
+    - lib/assets/images/imagem31.jpeg
+    - lib/assets/images/imagem32.jpeg
+    - lib/assets/images/imagem33.jpeg
+    - lib/assets/images/imagem34.jpeg
+    - lib/assets/images/imagem35.jpeg
+    - lib/assets/images/imagem36.jpeg
+    - lib/assets/images/imagem37.jpeg
+    - lib/assets/images/imagem38.jpeg
+    - lib/assets/images/imagem39.jpeg
+    - lib/assets/images/imagem40.jpeg
+    - lib/assets/images/imagem41.jpeg
+    - lib/assets/images/imagem42.jpeg
+    - lib/assets/images/imagem43.jpeg
+    - lib/assets/images/imagem44.jpeg
+    - lib/assets/images/imagem45.jpeg
+    - lib/assets/images/imagem46.jpeg
+    - lib/assets/images/imagem47.jpeg
+    - lib/assets/images/imagem48.jpeg
+    - lib/assets/images/imagem49.jpeg
+    - lib/assets/images/imagem50.jpeg
+    - lib/assets/images/imagem51.jpeg
+    - lib/assets/images/imagem52.jpeg
+    - lib/assets/images/imagem53.jpeg
+    - lib/assets/images/imagem54.jpeg
+    - lib/assets/images/imagem55.jpeg
+    - lib/assets/images/imagem56.jpeg
+    - lib/assets/images/imagem57.jpeg
+    - lib/assets/images/imagem58.jpeg
+    - lib/assets/images/imagem59.jpeg
+    - lib/assets/images/imagem60.jpeg
+    - lib/assets/images/imagem61.jpeg
+    - lib/assets/images/imagem62.jpeg
+    - lib/assets/images/imagem63.jpeg
+    - lib/assets/images/imagem64.jpeg
+    - lib/assets/images/imagem65.jpeg
+    - lib/assets/images/imagem66.jpg
+    - lib/assets/images/imagem67.jfif
+    - lib/assets/images/imagem68.jfif
+    - lib/assets/images/imagem69.jfif
+    - lib/assets/images/imagem70.jfif
+    - lib/assets/images/imagem71.jpg
+    - lib/assets/images/imagem72.jpg
+    - lib/assets/images/imagem73.jpeg
+    - lib/assets/images/imagem74.jpeg
+
+
     - lib/assets/images/imagemfundoServico.jpg
     - lib/assets/images/empresaes.png
     - lib/assets/videos/VideoDeInicio.mp4

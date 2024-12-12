@@ -24,11 +24,25 @@ class ServicesSection extends StatelessWidget {
 
     // Lista de imagens para o carrossel
     final List<String> imageUrls = [
-      'lib/assets/images/ImagemOne.jpeg',
-      'lib/assets/images/ImagemTwo.jpeg',
-      'lib/assets/images/ImagemThree.jpeg',
-      'lib/assets/images/ImagemFour.jpeg',
-      'lib/assets/images/ImagemFive.jpeg',
+      'lib/assets/images/imagem56.jpeg',
+      'lib/assets/images/imagem57.jpeg',
+      'lib/assets/images/imagem58.jpeg',
+      'lib/assets/images/imagem59.jpeg',
+      'lib/assets/images/imagem60.jpeg',
+      'lib/assets/images/imagem61.jpeg',
+      'lib/assets/images/imagem62.jpeg',
+      'lib/assets/images/imagem63.jpeg',
+      'lib/assets/images/imagem64.jpeg',
+      'lib/assets/images/imagem65.jpeg',
+      'lib/assets/images/imagem66.jpg',
+      'lib/assets/images/imagem67.jfif',
+      'lib/assets/images/imagem68.jfif',
+      'lib/assets/images/imagem69.jfif',
+      'lib/assets/images/imagem70.jfif',
+      'lib/assets/images/imagem71.jpg',
+      'lib/assets/images/imagem72.jpg',
+      'lib/assets/images/imagem73.jpeg',
+      'lib/assets/images/imagem74.jpeg',
     ];
 
     return Container(
