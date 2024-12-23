@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class Orcamento extends StatefulWidget {
   const Orcamento({Key? key}) : super(key: key);
@@ -22,9 +21,7 @@ class _OrcamentoState extends State<Orcamento> {
   // Variáveis para controle do assunto
   String? _assuntoSelecionado;
 
-  final String _sendGridApiKey = 'aUs0T1H9rIKjeuXS4Ct5Wjq13OJiTjo7';
-
-  // Função para enviar o orçamento via SendGrid
+  // Função para enviar o orçamento via WhatsApp
   Future<void> _enviarOrcamento() async {
     if (_formKey.currentState?.validate() ?? false) {
       final nome = _nomeController.text;
@@ -33,67 +30,24 @@ class _OrcamentoState extends State<Orcamento> {
       final assunto = _assuntoSelecionado ?? 'Sem Assunto';
       final descricao = _descricaoController.text;
 
-      // Criar o corpo do e-mail para enviar via SendGrid
-      final emailData = {
-        "personalizations": [
-          {
-            "to": [
-              {"email": "carinaferreiras@icloud.com"} // Destinatário do e-mail
-            ],
-            "subject": 'Orçamento de $nome'
-          }
-        ],
-        "from": {"email": "seu-email@dominio.com"}, // Substitua pelo seu e-mail
-        "content": [
-          {
-            "type": "text/plain",
-            "value":
-                'Nome: $nome\nEmail: $email\nTelefone: $telefone\nAssunto: $assunto\nDescrição: $descricao'
-          }
-        ]
-      };
+      // Criando a mensagem formatada para enviar via WhatsApp
+      final mensagem =
+          'Pedido de orçamento de $nome\n\nE-mail: $email\nTelefone: $telefone\nAssunto: $assunto\nDescrição: $descricao';
 
-      // Enviar a requisição HTTP para a API do SendGrid
-      try {
-        final response = await http.post(
-          Uri.parse('https://api.sendgrid.com/v3/mail/send'),
-          headers: {
-            'Authorization': 'Bearer $_sendGridApiKey',
-            'Content-Type': 'application/json',
-          },
-          body: json.encode(emailData),
-        );
+      const numeroWhatsapp = '+5571984414420';
 
-        if (response.statusCode == 202) {
-          // Exibir mensagem de sucesso
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              'Orçamento enviado com sucesso!',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            backgroundColor: Colors.green,
-          ));
-        } else {
-          // Exibir erro
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              'Falha ao enviar o orçamento: ${response.body}',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            backgroundColor: const Color.fromARGB(255, 54, 244, 190),
-          ));
-        }
-      } catch (e) {
-        // Exibir erro em caso de exceção
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      // Criando o link do WhatsApp
+      final whatsappUrl =
+          'https://api.whatsapp.com/send?phone=$numeroWhatsapp&text=${Uri.encodeComponent(mensagem)}';
+
+      // Verificando se o WhatsApp está instalado e abrindo o link
+      if (await canLaunch(whatsappUrl)) {
+        await launch(whatsappUrl);
+      } else {
+        // Se não conseguir abrir o WhatsApp
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-            'Erro ao enviar o orçamento: $e',
+            'Erro ao tentar abrir o WhatsApp.',
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -126,25 +80,24 @@ class _OrcamentoState extends State<Orcamento> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 'ORÇAMENTO',
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(
-                      255, 0, 0, 0), // Defina a cor conforme o fundo
+                  color: const Color.fromARGB(255, 10, 35, 66),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 10),
               // Formulário dentro do Container
               Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 width: 350,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black26,
                       offset: Offset(0, 4),
@@ -157,19 +110,20 @@ class _OrcamentoState extends State<Orcamento> {
                   child: Column(
                     children: [
                       // Texto "Envie seu orçamento" dentro do formulário
-                      Text(
-                        'Envie seu orçamento',
+                      const Text(
+                        'ENVIE SEU ORÇAMENTO',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black, // Cor preta
+                          color: const Color.fromARGB(
+                              255, 10, 35, 66), // Cor preta
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       // Nome
                       TextFormField(
                         controller: _nomeController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Nome (obrigatório)',
                         ),
                         validator: (value) {
@@ -183,11 +137,11 @@ class _OrcamentoState extends State<Orcamento> {
                         },
                         onChanged: (_) => setState(() {}),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       // Email
                       TextFormField(
                         controller: _emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Email (obrigatório)',
                         ),
                         keyboardType: TextInputType.emailAddress,
@@ -201,11 +155,12 @@ class _OrcamentoState extends State<Orcamento> {
                         },
                         onChanged: (_) => setState(() {}),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       // Telefone
                       TextFormField(
                         controller: _telefoneController,
-                        decoration: InputDecoration(labelText: 'Telefone'),
+                        decoration:
+                            const InputDecoration(labelText: 'Telefone'),
                         keyboardType: TextInputType.phone,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
@@ -221,25 +176,25 @@ class _OrcamentoState extends State<Orcamento> {
                         },
                         onChanged: (_) => setState(() {}),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       // Assunto
                       DropdownButtonFormField<String>(
                         value: _assuntoSelecionado,
-                        hint: Text('Selecione um assunto'),
+                        hint: const Text('Selecione um assunto'),
                         onChanged: (value) {
                           setState(() {
                             _assuntoSelecionado = value;
                           });
                         },
                         items:
-                            ['PROJETOS', 'CONSTRUÇÕES', 'ADEQUAÇÕES', 'Outros']
+                            ['PROJETOS', 'CONSTRUÇÕES', 'ADEQUAÇÕES', 'OUTROS']
                                 .map((assunto) => DropdownMenuItem(
                                       value: assunto,
                                       child: Text(assunto),
                                     ))
                                 .toList(),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       // Descrição
                       TextFormField(
                         controller: _descricaoController,
@@ -253,18 +208,19 @@ class _OrcamentoState extends State<Orcamento> {
                         },
                         onChanged: (_) => setState(() {}),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // Botão Enviar
                       ElevatedButton(
                         onPressed: _isFormValid ? _enviarOrcamento : null,
                         style: ElevatedButton.styleFrom(
-                          minimumSize: Size(double.infinity, 50),
+                          minimumSize: const Size(double.infinity, 50),
                           backgroundColor:
                               _isFormValid ? Colors.green : Colors.red,
                         ),
-                        child: Text(
+                        child: const Text(
                           'Enviar',
                           style: TextStyle(
+                            fontFamily: 'Quicksand',
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -272,16 +228,86 @@ class _OrcamentoState extends State<Orcamento> {
                         ),
                       ),
                       // Texto abaixo do botão
-                      SizedBox(height: 10),
-                      Text(
+                      const SizedBox(height: 10),
+                      const Text(
                         'Você precisa preencher todo o formulário para conseguir enviá-lo.',
                         style: TextStyle(
+                          fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.bold,
                           fontSize: 12,
-                          color: Colors.black54,
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                     ],
                   ),
+                ),
+              ),
+              // Rodapé
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+                padding: const EdgeInsets.all(16.0),
+                child: const Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween, // Para dividir as colunas
+                  children: [
+                    // Coluna à esquerda
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment
+                            .start, // Alinhando os textos à esquerda
+                        children: [
+                          Text(
+                            'NOME DA EMPRESA: Everton Silva Construtora',
+                            style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'TELEFONE PARA CONTATO: +5571984414420',
+                            style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Coluna à direita
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment
+                            .end, // Alinhando os textos à direita
+                        children: [
+                          Text(
+                            'E-MAIL: adm@construrota.net ',
+                            style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'INSTAGRAM: @esconstrutorasilva',
+                            style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

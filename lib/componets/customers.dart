@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class Customers extends StatefulWidget {
   const Customers({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CustomersState createState() => _CustomersState();
 }
 
-class _CustomersState extends State<Customers> {
+class _CustomersState extends State<Customers> with TickerProviderStateMixin {
   // Controladores para os números
   int experience = 0;
   int floors = 0;
@@ -18,6 +20,8 @@ class _CustomersState extends State<Customers> {
 
   bool _startAnimation = false;
 
+  late AnimationController _animationController;
+
   final int experienceMax = 7; // Anos de experiência
   final int floorsMax = 5; // KM de pisos assentados
   final int concreteMax = 15; // KM de concreto feito
@@ -26,130 +30,191 @@ class _CustomersState extends State<Customers> {
 
   // Função para animar os números
   void _animateNumbers() {
-    setState(() {
-      _startAnimation = true;
-    });
+    if (!_startAnimation) {
+      setState(() {
+        _startAnimation = true;
+      });
+      // Inicia a animação dos números
+      _animationController.forward();
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    // Inicia a animação assim que o widget for criado
-    _animateNumbers();
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 5),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose(); // Destruir o controlador de animação
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Lista de imagens para o carrossel
+    // Lista de imagens para o carrossel (logos)
     final List<String> images = [
       'lib/assets/logos/logo0.png',
       'lib/assets/logos/logo1.png',
+      'lib/assets/logos/logo2.png',
       'lib/assets/logos/logo3.jpg',
       'lib/assets/logos/logo5.png',
       'lib/assets/logos/logo4.png',
       'lib/assets/logos/logo6.jpg',
+      'lib/assets/logos/logo7.png',
       'lib/assets/logos/logo8.png',
       'lib/assets/logos/logo9.png',
       'lib/assets/logos/logo10.png',
       'lib/assets/logos/logo11.png',
-      'lib/assets/logos/logo12.png',
     ];
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 30),
-          const Text(
-            "Clientes",
-            style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 25), // Espaço entre o título e o carrossel
+    // Lista de imagens fixas acima do carrossel
+    final List<String> fixedImages = [
+      'lib/assets/logos/logoEstatica1.png',
+      'lib/assets/logos/logoEstatica2.png',
+      'lib/assets/logos/logoEstatica3.png',
+    ];
 
-          // Carrossel de imagens (4 imagens por vez)
-          CarouselSlider.builder(
-            itemCount: (images.length / 4)
-                .ceil(), // Dividimos a quantidade de imagens por 4
-            itemBuilder: (context, index, realIndex) {
-              // Agrupando 4 imagens por vez
-              int startIndex = index * 4;
-              int endIndex = (startIndex + 4) > images.length
-                  ? images.length
-                  : startIndex + 4;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Verifica se a largura da tela é menor que 580px
+        bool isSmallScreen = constraints.maxWidth < 580;
+        bool isMediumScreen = constraints.maxWidth < 800;
 
-              List<String> imageGroup =
-                  images.sublist(startIndex, endIndex); // Sublista de 4 imagens
+        // Número de imagens por vez no carrossel, dependendo do tamanho da tela
+        int imagesPerPage = isSmallScreen ? 3 : (isMediumScreen ? 4 : 6);
 
-              return Row(
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Título
+              Text(
+                "CLIENTES",
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 10, 35, 66),
+                  fontSize:
+                      isSmallScreen ? 28 : 40, // Ajusta o tamanho da fonte
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 25),
+
+              // Exibindo as imagens fixas acima do carrossel
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: imageGroup.map((image) {
+                children: fixedImages.map((image) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 110), // Espaçamento entre as imagens
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Image.asset(
                       image,
-                      width: MediaQuery.of(context).size.width *
-                          0.10, // Ajustando o tamanho das imagens
+                      width: MediaQuery.of(context).size.width * 0.25,
                       fit: BoxFit.cover,
                     ),
                   );
                 }).toList(),
-              );
-            },
-            options: CarouselOptions(
-              height: 250, // Altura do carrossel
-              enlargeCenterPage: true,
-              aspectRatio: 16 / 9, // Ajuste da relação de aspecto
-              viewportFraction: 1.0, // Carrossel ocupa toda a largura da tela
-              autoPlay: true, // Ativa a rotação automática
-              enableInfiniteScroll: true, // Permite rotação infinita
-            ),
-          ),
+              ),
+              const SizedBox(height: 30),
 
-          const SizedBox(height: 30),
+              // Carrossel de imagens (6 ou 3 imagens por vez, dependendo da largura da tela)
+              CarouselSlider.builder(
+                itemCount: (images.length / imagesPerPage).ceil(),
+                itemBuilder: (context, index, realIndex) {
+                  // Agrupando imagens por vez
+                  int startIndex = index * imagesPerPage;
+                  int endIndex = (startIndex + imagesPerPage) > images.length
+                      ? images.length
+                      : startIndex + imagesPerPage;
 
-          // Título
-          const Text(
-            "Nossa história fala por nós",
-            style: TextStyle(fontSize: 44, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Nossos números também",
-            style: TextStyle(fontSize: 44, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 60),
+                  List<String> imageGroup =
+                      images.sublist(startIndex, endIndex);
 
-          // Textos em uma única linha
-          if (_startAnimation)
-            Row(
-              mainAxisAlignment: MainAxisAlignment
-                  .center, // Ou spaceEvenly, dependendo da necessidade
-              children: [
-                _buildAnimatedNumber(
-                    "Anos de experiência", experience, experienceMax),
-                const SizedBox(width: 40), // Espaçamento entre os itens
-                _buildAnimatedNumber(
-                    "KM de pisos assentados", floors, floorsMax),
-                const SizedBox(width: 40),
-                _buildAnimatedNumber(
-                    "KM de concreto feito", concrete, concreteMax),
-                const SizedBox(width: 40),
-                _buildAnimatedNumber(
-                    "M² construído", constructed, constructedMax),
-                const SizedBox(width: 40),
-                _buildAnimatedNumber(
-                    "KM de paredes pintadas", painted, paintedMax),
-              ],
-            ),
-        ],
-      ),
+                  return Container(
+                    color: const Color.fromARGB(225, 255, 255, 255),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: imageGroup.map((image) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 1),
+                          child: Image.asset(
+                            image,
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                },
+                options: CarouselOptions(
+                  height: 250,
+                  enlargeCenterPage: true,
+                  aspectRatio: 16 / 9,
+                  viewportFraction: 1.0,
+                  autoPlay: true,
+                  enableInfiniteScroll: true,
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              // Títulos
+              Text(
+                "NOSSA HISTORIA FALA POR NÓS",
+                style: TextStyle(
+                  fontSize:
+                      isSmallScreen ? 22 : 38, // Ajusta o tamanho da fonte
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "NOSSOS NÚMEROS TAMBÉM ",
+                style: TextStyle(
+                  fontSize:
+                      isSmallScreen ? 22 : 38, // Ajusta o tamanho da fonte
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 30),
+
+              // Usando VisibilityDetector para iniciar a animação quando a seção ficar visível
+              VisibilityDetector(
+                key: const Key('numbers-section'),
+                onVisibilityChanged: (visibilityInfo) {
+                  if (visibilityInfo.visibleFraction > 0.5 &&
+                      !_startAnimation) {
+                    _animateNumbers();
+                  }
+                },
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 40,
+                  runSpacing: 20,
+                  children: [
+                    _buildAnimatedNumber(
+                        "Anos de experiência", experience, experienceMax),
+                    _buildAnimatedNumber(
+                        "KM de pisos assentados", floors, floorsMax),
+                    _buildAnimatedNumber(
+                        "KM de concreto feito", concrete, concreteMax),
+                    _buildAnimatedNumber(
+                        "M² construído", constructed, constructedMax),
+                    _buildAnimatedNumber(
+                        "KM de paredes pintadas", painted, paintedMax),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -157,23 +222,36 @@ class _CustomersState extends State<Customers> {
   Widget _buildAnimatedNumber(String label, int currentValue, int maxValue) {
     return Column(
       children: [
-        Row(
-          children: [
-            TweenAnimationBuilder<int>(
-              tween: IntTween(begin: currentValue, end: maxValue),
-              duration: const Duration(seconds: 5),
-              builder: (context, value, child) {
-                return Text(
-                  '$label: $value',
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                  ),
-                );
-              },
-            ),
-          ],
+        // Número com estilo maior e negrito
+        AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            double percentage = _animationController.value;
+            int animatedValue =
+                (currentValue + ((maxValue - currentValue) * percentage))
+                    .toInt();
+
+            return Text(
+              '$animatedValue',
+              style: const TextStyle(
+                fontFamily: 'Quicksand',
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(0, 0, 0, 1),
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: 5),
+        // Texto explicativo sem negrito
+        Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'Quicksand',
+            fontSize: 18,
+            fontWeight: FontWeight.normal,
+            color: Color.fromRGBO(0, 0, 0, 1),
+          ),
         ),
         const SizedBox(height: 10),
       ],

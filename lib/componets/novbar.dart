@@ -1,45 +1,129 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class ResponsiveNavbar extends StatefulWidget {
+  final Function(String) scrollToSection;
+
+  const ResponsiveNavbar(
+      {super.key,
+      required this.scrollToSection,
+      required ScrollController scrollController});
+
   @override
   _ResponsiveNavbarState createState() => _ResponsiveNavbarState();
 }
 
 class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
   bool _isMenuOpen = false;
-  ScrollController _scrollController = ScrollController();
 
-  // Função para rolar até a seção
-  void _scrollToSection(String section) {
-    double offset = 0.0;
-    switch (section) {
-      case 'SOBRE NÓS':
-        offset = 700; // Substitua pelo valor real da posição da seção
-        break;
-      case 'SERVIÇOS':
-        offset = 300.0;
-        break;
-      case 'CLIENTES':
-        offset = 500.0;
-        break;
-      case 'LOCALIZAÇÃO':
-        offset = 700.0;
-        break;
-    }
-    _scrollController.animateTo(
-      offset,
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  // Função para abrir/fechar o menu lateral
+  // Função para abrir o menu no modal
   void _toggleMenu() {
     setState(() {
       _isMenuOpen = !_isMenuOpen;
     });
+    if (_isMenuOpen) {
+      _showMenuModal();
+    }
+  }
+
+  // Função para exibir o modal
+  void _showMenuModal() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 10,
+          child: Transform.translate(
+            offset: const Offset(38, 0), // Desloca 20 pixels para a direita
+            child: Align(
+              alignment: Alignment.topRight, // Alinha ao topo e à direita
+              child: Container(
+                padding: const EdgeInsets.all(0),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(200),
+                    bottomLeft: Radius.circular(200),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 4),
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.close, // Ícone de fechar (X)
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Fecha o modal ao clicar
+                      },
+                    ),
+                    // Botões de navegação com espaçamento
+                    NavButton(
+                      label: 'SOBRE NÓS',
+                      onPressed: () {
+                        widget.scrollToSection('SOBRE NÓS');
+                        Navigator.of(context).pop(); // Fecha o modal ao clicar
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                    NavButton(
+                      label: 'SERVIÇOS',
+                      onPressed: () {
+                        widget.scrollToSection('SERVIÇOS');
+                        Navigator.of(context).pop(); // Fecha o modal ao clicar
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                    NavButton(
+                      label: 'CLIENTES',
+                      onPressed: () {
+                        widget.scrollToSection('CLIENTES');
+                        Navigator.of(context).pop(); // Fecha o modal ao clicar
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                    NavButton(
+                      label: 'LOCALIZAÇÃO',
+                      onPressed: () {
+                        widget.scrollToSection('LOCALIZAÇÃO');
+                        Navigator.of(context).pop(); // Fecha o modal ao clicar
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                    NavButton(
+                      label: 'ORÇAMENTO GRATUITO',
+                      onPressed: () {
+                        widget.scrollToSection('ORÇAMENTO GRATUITO');
+                        Navigator.of(context).pop(); // Fecha o modal ao clicar
+                      },
+                      hasAnimatedBorder:
+                          true, // Define a animação no botão específico
+                    ),
+                    const SizedBox(height: 50),
+                    Image.asset(
+                      alignment: AlignmentDirectional.bottomStart,
+                      'lib/assets/images/logo.png',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.contain,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -65,7 +149,7 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth > 900) {
+            if (constraints.maxWidth > 1000) {
               // Navbar para telas grandes
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,23 +168,26 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
                     children: [
                       NavButton(
                         label: 'SOBRE NÓS',
-                        onPressed: () => _scrollToSection('SOBRE NÓS'),
+                        onPressed: () => widget.scrollToSection('SOBRE NÓS'),
                       ),
                       NavButton(
                         label: 'SERVIÇOS',
-                        onPressed: () => _scrollToSection('SERVIÇOS'),
+                        onPressed: () => widget.scrollToSection('SERVIÇOS'),
                       ),
                       NavButton(
                         label: 'CLIENTES',
-                        onPressed: () => _scrollToSection('CLIENTES'),
+                        onPressed: () => widget.scrollToSection('CLIENTES'),
                       ),
                       NavButton(
                         label: 'LOCALIZAÇÃO',
-                        onPressed: () => _scrollToSection('LOCALIZAÇÃO'),
+                        onPressed: () => widget.scrollToSection('LOCALIZAÇÃO'),
                       ),
                       NavButton(
                         label: 'ORÇAMENTO GRATUITO',
-                        onPressed: () => _scrollToSection('ORÇAMENTO GRATUITO'),
+                        onPressed: () =>
+                            widget.scrollToSection('ORÇAMENTO GRATUITO'),
+                        hasAnimatedBorder:
+                            true, // Habilita a animação para o botão específico
                       ),
                     ],
                   ),
@@ -118,12 +205,11 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
                     fit: BoxFit.contain,
                   ),
                   IconButton(
-                    icon: AnimatedIcon(
-                      icon: AnimatedIcons.menu_close,
-                      progress: AlwaysStoppedAnimation(_isMenuOpen ? 1.0 : 0.0),
-                      color: const Color.fromARGB(255, 0, 0, 0),
+                    icon: const Icon(
+                      Icons.menu, // Ícone do menu
+                      color: Colors.black,
                     ),
-                    onPressed: _toggleMenu,
+                    onPressed: _toggleMenu, // Chama o toggle do menu
                   ),
                 ],
               );
@@ -138,130 +224,92 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
 class NavButton extends StatefulWidget {
   final String label;
   final VoidCallback onPressed;
+  final bool hasAnimatedBorder; // Flag para o botão específico
 
-  const NavButton({required this.label, required this.onPressed});
+  const NavButton(
+      {super.key,
+      required this.label,
+      required this.onPressed,
+      this.hasAnimatedBorder = false}); // Por padrão, sem borda animada
 
   @override
   _NavButtonState createState() => _NavButtonState();
 }
 
-class _NavButtonState extends State<NavButton>
-    with SingleTickerProviderStateMixin {
+class _NavButtonState extends State<NavButton> {
   bool _isHovered = false;
-  late AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 4),
-    )..repeat(); // Repetir animação continuamente
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final bool isSpecialButton = widget.label == "ORÇAMENTO GRATUITO";
-
     return MouseRegion(
       onEnter: (_) {
         setState(() {
-          _isHovered = true;
-          if (isSpecialButton) _animationController.stop();
+          _isHovered = true; // Quando o mouse entra, muda o estado
         });
       },
       onExit: (_) {
         setState(() {
-          _isHovered = false;
-          if (isSpecialButton) _animationController.repeat();
+          _isHovered = false; // Quando o mouse sai, volta ao estado original
         });
       },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 10),
-        curve: Curves.easeInOut,
-        decoration: BoxDecoration(
-          color: _isHovered
-              ? const Color.fromARGB(255, 123, 186, 242)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(
-            color: _isHovered ? Colors.blue : Colors.transparent,
-            width: 1,
+      child: AnimatedPadding(
+        duration: const Duration(milliseconds: 300), // Duração da animação
+        padding: widget.hasAnimatedBorder && !_isHovered
+            ? const EdgeInsets.symmetric(
+                vertical: 12.0,
+                horizontal: 20.0) // Padding aumentado quando hover
+            : const EdgeInsets.symmetric(
+                vertical: 8.0, horizontal: 16.0), // Padding normal
+        curve: Curves.easeInOut, // Curva de animação
+        child: AnimatedContainer(
+          duration: const Duration(
+              milliseconds: 1000), // Duração da animação da borda
+          decoration: BoxDecoration(
+            border: widget.hasAnimatedBorder
+                ? Border.all(
+                    color: _isHovered
+                        ? Colors.blue
+                        : Colors.transparent, // Cor da borda
+                    width: 2,
+                  )
+                : null,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: widget.hasAnimatedBorder
+                ? [
+                    BoxShadow(
+                      color: Colors.blue.withOpacity(0.5),
+                      spreadRadius: 3,
+                      blurRadius: 10,
+                      offset: Offset(0, 0),
+                    ),
+                  ]
+                : [],
           ),
-        ),
-        child: Stack(
-          children: [
-            // Texto do botão
-            TextButton(
-              onPressed: widget.onPressed,
-              child: Text(
-                widget.label,
-                style: TextStyle(
-                  color: _isHovered ? Colors.white : Colors.black,
-                  fontSize: 16,
-                ),
+          child: TextButton(
+            onPressed: widget.onPressed,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                _isHovered
+                    ? Colors.blue
+                    : Colors.transparent, // Muda a cor para azul quando hover
+              ),
+              foregroundColor: MaterialStateProperty.all(
+                _isHovered
+                    ? Colors.white
+                    : Colors
+                        .black, // Muda a cor do texto para branco quando hover
               ),
             ),
-            if (isSpecialButton && !_isHovered)
-              // Contorno animado
-              Positioned.fill(
-                child: AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (context, child) {
-                    return CustomPaint(
-                      painter: CirclePainter(
-                        progress: _animationController.value,
-                      ),
-                    );
-                  },
-                ),
-              ),
-          ],
+            child: Text(
+              widget.label,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontFamily: 'Borel', // Usando a fonte 'Borel'
+                      ) ??
+                  const TextStyle(fontFamily: 'Borel'), // Aplicando a fonte
+            ),
+          ),
         ),
       ),
     );
   }
-}
-
-// Painter para desenhar o contorno animado
-class CirclePainter extends CustomPainter {
-  final double progress;
-
-  CirclePainter({required this.progress});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = const Color.fromARGB(157, 146, 179, 228)
-      ..strokeWidth = 3.5
-      ..style = PaintingStyle.stroke;
-
-    // Desenhar o caminho circular
-    Rect rect = const Rect.fromLTWH(2, 0, 200, 30);
-
-    final Path path = Path()
-      ..addRRect(RRect.fromRectAndRadius(rect, const Radius.circular(30)));
-
-    // Calcular o comprimento do caminho
-    final PathMetric pathMetric = path.computeMetrics().first;
-    final double pathLength = pathMetric.length;
-
-    // Criar um segmento animado
-    final Path animatedPath = pathMetric.extractPath(
-      progress * pathLength, // Início do segmento
-      (progress * pathLength) + (pathLength * 0.4), // Tamanho do segmento
-    );
-
-    // Desenhar o segmento
-    canvas.drawPath(animatedPath, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
