@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'imageVideo.dart';
+import 'package:projeto_evertonconstrutora/componets/imageVideo.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({super.key});
@@ -22,27 +22,27 @@ class ServicesSection extends StatelessWidget {
     ];
 
     final List<String> imageUrls = [
-      'lib/assets/images/imagem2.jpeg',
-      'lib/assets/images/imagem3.jpeg',
-      'lib/assets/images/imagem4.jpeg',
-      'lib/assets/images/imagem28.jpeg',
-      'lib/assets/images/imagem34.jpeg',
-      'lib/assets/images/imagem40.jpeg',
-      'lib/assets/images/imagem43.jpeg',
-      'lib/assets/images/imagem48.jpeg',
-      'lib/assets/images/imagem54.jpeg',
-      'lib/assets/images/imagem62.jpeg',
-      'lib/assets/images/imagem64.jpeg',
-      'lib/assets/images/imagem66.jpg',
-      'lib/assets/images/imagem65.jpeg',
-      'lib/assets/images/imagem89.jpg',
-      'lib/assets/images/imagem91.jpg',
+      'assets/images/imagem2.jpeg',
+      'assets/images/imagem3.jpeg',
+      'assets/images/imagem4.jpeg',
+      'assets/images/imagem28.jpeg',
+      'assets/images/imagem34.jpeg',
+      'assets/images/imagem40.jpeg',
+      'assets/images/imagem43.jpeg',
+      'assets/images/imagem48.jpeg',
+      'assets/images/imagem54.jpeg',
+      'assets/images/imagem62.jpeg',
+      'assets/images/imagem64.jpeg',
+      'assets/images/imagem66.jpg',
+      'assets/images/imagem65.jpeg',
+      'assets/images/imagem89.jpg',
+      'assets/images/imagem91.jpg',
     ];
 
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('lib/assets/images/imagemfundoServico.jpg'),
+          image: AssetImage('assets/images/imagemfundoServico.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -144,15 +144,15 @@ class ServicesSection extends StatelessWidget {
                           );
                         },
                         child: const Text(
-                          'CLIQUE AQUI!',
+                          'CLIQUE AQUI E VEJA MAIS IMAGENS', // Texto alterado
                           style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 10,
+                            color: Colors.black, // Cor do texto
+                            fontSize: 16, // Tamanho da fonte
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 )
               : Row(
@@ -225,15 +225,15 @@ class ServicesSection extends StatelessWidget {
                                 );
                               },
                               child: const Text(
-                                'CLIQUE AQUI!',
+                                'CLIQUE AQUI E VEJA MAIS IMAGENS', // Texto alterado
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontSize: 14,
+                                  color: Colors.black, // Cor do texto (preta)
+                                  fontSize: 16, // Tamanho da fonte ajustado
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
@@ -309,10 +309,13 @@ class _AnimatedButtonState extends State<AnimatedButton> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           decoration: BoxDecoration(
-            color: _isHovered ? Colors.blue : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
+            color:
+                _isHovered ? Colors.blue : Colors.grey, // Altera a cor de fundo
+            borderRadius: _isHovered
+                ? BorderRadius.circular(15)
+                : BorderRadius.circular(100), // Borda arredondada
             border: Border.all(
-              color: _isHovered ? Colors.blue : Colors.black,
+              color: _isHovered ? Colors.blue : Colors.black, // Cor da borda
               width: 2,
             ),
           ),

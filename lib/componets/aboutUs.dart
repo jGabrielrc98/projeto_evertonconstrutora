@@ -106,18 +106,18 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     // Lista de imagens para o carrossel
     List<String> imagePaths = [
-      'lib/assets/images/imagem.jpeg',
-      'lib/assets/images/imagem2.jpeg',
-      'lib/assets/images/imagem22.jpeg',
-      'lib/assets/images/imagem4.jpeg',
+      'assets/images/imagem.jpeg',
+      'assets/images/imagem2.jpeg',
+      'assets/images/imagem22.jpeg',
+      'assets/images/imagem4.jpeg',
     ];
 
     // Lista de vídeos para o carrossel
     List<String> videoPaths = [
-      'lib/assets/videos/video.mp4',
-      'lib/assets/videos/video1.mp4',
-      'lib/assets/videos/video2.mp4',
-      'lib/assets/videos/video3.mp4',
+      'assets/videos/video.mp4',
+      'assets/videos/video1.mp4',
+      'assets/videos/video2.mp4',
+      'assets/videos/video3.mp4',
     ];
 
     return Padding(

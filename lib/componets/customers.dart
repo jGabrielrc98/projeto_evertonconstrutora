@@ -58,25 +58,25 @@ class _CustomersState extends State<Customers> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     // Lista de imagens para o carrossel (logos)
     final List<String> images = [
-      'lib/assets/logos/logo0.png',
-      'lib/assets/logos/logo1.png',
-      'lib/assets/logos/logo2.png',
-      'lib/assets/logos/logo3.jpg',
-      'lib/assets/logos/logo5.png',
-      'lib/assets/logos/logo4.png',
-      'lib/assets/logos/logo6.jpg',
-      'lib/assets/logos/logo7.png',
-      'lib/assets/logos/logo8.png',
-      'lib/assets/logos/logo9.png',
-      'lib/assets/logos/logo10.png',
-      'lib/assets/logos/logo11.png',
+      'assets/logos/logo0.png',
+      'assets/logos/logo1.png',
+      'assets/logos/logo2.png',
+      'assets/logos/logo3.jpg',
+      'assets/logos/logo5.png',
+      'assets/logos/logo4.png',
+      'assets/logos/logo6.jpg',
+      'assets/logos/logo7.png',
+      'assets/logos/logo8.png',
+      'assets/logos/logo9.png',
+      'assets/logos/logo10.png',
+      'assets/logos/logo11.png',
     ];
 
     // Lista de imagens fixas acima do carrossel
     final List<String> fixedImages = [
-      'lib/assets/logos/logoEstatica1.png',
-      'lib/assets/logos/logoEstatica2.png',
-      'lib/assets/logos/logoEstatica3.png',
+      'assets/logos/logoEstatica1.png',
+      'assets/logos/logoEstatica2.png',
+      'assets/logos/logoEstatica3.png',
     ];
 
     return LayoutBuilder(

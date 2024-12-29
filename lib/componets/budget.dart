@@ -34,7 +34,7 @@ class _OrcamentoState extends State<Orcamento> {
       final mensagem =
           'Pedido de orçamento de $nome\n\nE-mail: $email\nTelefone: $telefone\nAssunto: $assunto\nDescrição: $descricao';
 
-      const numeroWhatsapp = '+5571984414420';
+      const numeroWhatsapp = '+5575981714919';
 
       // Criando o link do WhatsApp
       final whatsappUrl =
@@ -71,7 +71,7 @@ class _OrcamentoState extends State<Orcamento> {
         // Imagem de fundo
         Positioned.fill(
           child: Image.asset(
-            'lib/assets/images/empresaes.png',
+            'assets/images/empresaes.png',
             fit: BoxFit.cover,
           ),
         ),

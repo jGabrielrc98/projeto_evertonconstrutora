@@ -9,14 +9,18 @@ class SectionOne extends StatefulWidget {
 }
 
 class _SectionOneState extends State<SectionOne> {
-  final String _videoPath = 'lib/assets/videos/VideoDeInicio.mp4';
+  final String _videoPathLarge =
+      'assets/videos/VideoDeInicio.mp4'; // Caminho do vídeo para telas grandes
+  final String _videoPathSmall =
+      'assets/videos/videotelasmenores.mp4'; // Caminho do vídeo para telas pequenas
   late VideoPlayerController _controller;
   bool _isAutoplayFailed = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeVideoPlayer();
+    _initializeVideoPlayer(
+        _videoPathLarge); // Inicializa o vídeo padrão para telas grandes
   }
 
   @override
@@ -25,8 +29,8 @@ class _SectionOneState extends State<SectionOne> {
     super.dispose();
   }
 
-  void _initializeVideoPlayer() {
-    _controller = VideoPlayerController.asset(_videoPath)
+  void _initializeVideoPlayer(String videoPath) {
+    _controller = VideoPlayerController.asset(videoPath)
       ..initialize().then((_) {
         setState(() {});
         _controller.setLooping(true);
@@ -56,42 +60,58 @@ class _SectionOneState extends State<SectionOne> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Container(
-        width: MediaQuery.of(context).size.width, // Largura total da tela
-        height: 600, // Altura fixa
-        color: Colors.black,
-        child: Stack(
-          children: [
-            // Exibe o vídeo se ele foi inicializado
-            _controller.value.isInitialized
-                ? Positioned.fill(
-                    child: FittedBox(
-                      fit: BoxFit.fill, // O vídeo preencherá o espaço definido
-                      child: SizedBox(
-                        width: _controller.value.size.width,
-                        height: _controller.value.size.height,
-                        child: VideoPlayer(_controller),
+      width: MediaQuery.of(context).size.width, // Largura total da tela
+      height: 600, // Altura fixa
+      color: Colors.black,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Se a largura da tela for menor que 900px, carrega o vídeo alternativo
+          bool isSmallScreen = constraints.maxWidth < 900;
+
+          if (isSmallScreen && _controller.dataSource != _videoPathSmall) {
+            // Se a tela for pequena, troca para o vídeo alternativo
+            _initializeVideoPlayer(_videoPathSmall);
+          } else if (!isSmallScreen &&
+              _controller.dataSource != _videoPathLarge) {
+            // Se a tela for grande, carrega o vídeo principal
+            _initializeVideoPlayer(_videoPathLarge);
+          }
+
+          return Stack(
+            children: [
+              // Exibe o vídeo se ele foi inicializado
+              _controller.value.isInitialized
+                  ? Positioned.fill(
+                      child: FittedBox(
+                        fit:
+                            BoxFit.fill, // O vídeo preencherá o espaço definido
+                        child: SizedBox(
+                          width: _controller.value.size.width,
+                          height: _controller.value.size.height,
+                          child: VideoPlayer(_controller),
+                        ),
                       ),
+                    )
+                  : Center(
+                      child:
+                          CircularProgressIndicator()), // Indicador de carregamento
+
+              // Botão para reprodução manual, caso o autoplay falhe
+              if (_isAutoplayFailed)
+                Positioned(
+                  bottom: 50,
+                  left: 50,
+                  right: 50,
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: _playVideo,
+                      child: Text('Clique para reproduzir'),
                     ),
-                  )
-                : Center(
-                    child:
-                        CircularProgressIndicator()), // Indicador de carregamento
-            // Botão para reprodução manual, caso o autoplay falhe
-            if (_isAutoplayFailed)
-              Positioned(
-                bottom: 50,
-                left: 50,
-                right: 50,
-                child: Center(
-                  child: ElevatedButton(
-                    onPressed: _playVideo,
-                    child: Text('Clique para reproduzir'),
                   ),
                 ),
-              ),
-          ],
-        ),
+            ],
+          );
+        },
       ),
     );
   }

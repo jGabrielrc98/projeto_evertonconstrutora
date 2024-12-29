@@ -111,7 +111,7 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
                     const SizedBox(height: 50),
                     Image.asset(
                       alignment: AlignmentDirectional.bottomStart,
-                      'lib/assets/images/logo.png',
+                      'assets/images/logo.png',
                       width: 100,
                       height: 100,
                       fit: BoxFit.contain,
@@ -157,7 +157,7 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
                   Row(
                     children: [
                       Image.asset(
-                        'lib/assets/images/logo.png',
+                        'assets/images/logo.png',
                         width: 200,
                         height: 100,
                         fit: BoxFit.contain,
@@ -199,7 +199,7 @@ class _ResponsiveNavbarState extends State<ResponsiveNavbar> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image.asset(
-                    'lib/assets/images/logo.png',
+                    'assets/images/logo.png',
                     width: 100,
                     height: 50,
                     fit: BoxFit.contain,
