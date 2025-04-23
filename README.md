@@ -1,16 +1,25 @@
-# projeto_evertonconstrutora
+🏗️ Projeto Everton Construtora
+📌 Descrição / Description
+Este projeto consiste em uma aplicação web desenvolvida para a Everton Construtora, com o objetivo de otimizar o gerenciamento de processos internos da empresa. A aplicação permite o controle eficiente de informações, facilitando a comunicação e a organização das operações.
 
-A new Flutter project.
+This project is a web application developed for Everton Construtora, aiming to optimize the management of the company's internal processes. The application allows efficient information control, enhancing communication and organization of operations.
 
-## Getting Started
+⚙️ Tecnologias / Technologies
+Frontend: Dart, Flutter
 
-This project is a starting point for a Flutter application.
+🖼️ Funcionalidades / Features
+📄 Página com informações sobre a empresa
+/ Page with company information
 
-A few resources to get you started if this is your first Flutter project:
+🛠️ Seção de serviços oferecidos
+/ Services section
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+🖼️ Galeria de imagens dos projetos realizados
+/ Project gallery
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+📞 Formulário de contato e orçamento
+/ Contact and quote request form
+
+📱 Design responsivo (compatível com mobile)
+/ Responsive design (mobile-friendly)
+
