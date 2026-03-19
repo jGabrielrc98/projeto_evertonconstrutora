@@ -14,7 +14,7 @@ export default function HeroSection() {
         playsInline
         className={styles.videoBackground}
       >
-        <source src="/assets/videos/VideoDeInicio.mp4" type="video/mp4" />
+        <source src="/assets/videos/videoDeInicio.mp4" type="video/mp4" />
         Seu navegador não suporta a tag de vídeo.
       </video>
       <div className={styles.overlay}></div>
