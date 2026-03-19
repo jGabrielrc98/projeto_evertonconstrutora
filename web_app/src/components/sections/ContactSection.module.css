@@ -1,0 +1,148 @@
+.contactSection {
+  background-image: url('/assets/images/empresaes.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  padding-top: 100px;
+}
+
+/* Fallback background if image is missing */
+.contactSection::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(245, 245, 245, 0.95);
+  z-index: 1;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+}
+
+.formWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 80px;
+}
+
+.formContainer {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.submitBtn {
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: white;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.validBtn {
+  background-color: #22c55e; /* Green */
+  cursor: pointer;
+}
+
+.validBtn:hover {
+  background-color: #16a34a;
+}
+
+.invalidBtn {
+  background-color: #ef4444; /* Red */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.formHelp {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.footer {
+  position: relative;
+  z-index: 2;
+  background: white;
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footerCol p {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.textRight {
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .footerContainer {
+    flex-direction: column;
+    text-align: center;
+  }
+  .textRight {
+    text-align: center;
+  }
+}

@@ -1,0 +1,142 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+.scrolled {
+  background-color: var(--color-secondary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  height: 80px;
+}
+
+.navContainer {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logoImg:hover {
+  transform: scale(1.05);
+}
+
+.desktopMenu {
+  display: none;
+}
+
+.navLink {
+  margin-left: 2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Base text color when transparent */
+.navbar:not(.scrolled) .navLink {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar:not(.scrolled) .navLink:hover {
+  color: white;
+}
+
+/* Base text color when scrolled */
+.scrolled .navLink {
+  color: var(--color-primary);
+}
+
+.scrolled .navLink:hover {
+  color: var(--color-accent);
+}
+
+/* Hover underline effect */
+.navLink::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  transition: width 0.3s ease;
+}
+
+.navbar:not(.scrolled) .navLink::after {
+  background-color: white;
+}
+
+.scrolled .navLink::after {
+  background-color: var(--color-accent);
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.mobileMenuToggle {
+  display: block;
+}
+
+/* Mobile Menu overlay */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-secondary);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mobileMenuOpen {
+  transform: translateX(0);
+}
+
+.mobileMenuContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mobileNavLink {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+@media (min-width: 900px) {
+  .desktopMenu {
+    display: flex;
+    align-items: center;
+  }
+
+  .mobileMenuToggle {
+    display: none;
+  }
+}

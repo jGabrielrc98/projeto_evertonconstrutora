@@ -1,0 +1,48 @@
+.customersSection {
+  padding: 100px 0;
+  background-color: var(--color-background-light);
+  text-align: center;
+}
+
+.statsContainer {
+  margin-top: 4rem;
+}
+
+.statsTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-main);
+  margin-bottom: 3rem;
+  line-height: 1.4;
+}
+
+.statsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.statCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  min-width: 200px;
+  flex: 1 1 200px;
+  max-width: 280px;
+}
+
+.statValue {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-quicksand), sans-serif;
+}
+
+.statLabel {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
